@@ -1,0 +1,48 @@
+header {
+  top: 40px;
+  background: #1c1c21;
+
+  /* interface/accent */
+
+  /* card/x-large */
+  box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04),
+    0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04),
+    0px 0px 1px rgba(0, 0, 0, 0.04);
+}
+
+.content {
+  width: 1280px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  margin: auto;
+}
+
+.navbar {
+  justify-self: left;
+}
+
+.blockItem {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.item:hover,
+.item:hover svg {
+  color: var(--text-inactive-color);
+  fill: var(--text-inactive-color);
+  cursor: pointer;
+}
