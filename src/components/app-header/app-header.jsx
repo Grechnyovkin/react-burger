@@ -12,22 +12,28 @@ const AppHeader = () => {
       <div className={`${headerStyle.content} pb-4 pt-4`}>
         <nav className={`${headerStyle.navbar} `}>
           <div className={`${headerStyle.blockItem} `}>
-            <div className={`${headerStyle.item} pl-5 pr-5 pt-4 pb-4`}>
+            <a
+              href="/some/valid/uri"
+              className={`${headerStyle.item} pl-5 pr-5 pt-4 pb-4`}
+            >
               <BurgerIcon />
               Конструктор
-            </div>
-            <div className={`${headerStyle.item}`}>
+            </a>
+            <a href="/some/valid/uri" className={`${headerStyle.item}`}>
               <ListIcon />
               Лента заказов
-            </div>
+            </a>
           </div>
         </nav>
         <Logo />
         <div className={`${headerStyle.cabinet}`}>
-          <div className={`${headerStyle.item} pl-5 pr-5 pt-4 pb-4`}>
+          <a
+            href="/some/valid/uri"
+            className={`${headerStyle.item} pl-5 pr-5 pt-4 pb-4`}
+          >
             <ProfileIcon />
             Личный Кабинет
-          </div>
+          </a>
         </div>
       </div>
     </header>

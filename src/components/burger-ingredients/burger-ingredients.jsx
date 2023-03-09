@@ -1,13 +1,12 @@
-import {
-  Tab,
-  CurrencyIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import data from '../../utils/data';
+import CardIngridient from '../card-ingridient/card-ingridient';
 import tabStyle from './burger-ingredients.module.css';
+import Section from '../section/section';
 
-const cardPropsTypes = PropTypes.shape({
+const cardIngridientPropsTypes = PropTypes.shape({
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -22,12 +21,12 @@ const cardPropsTypes = PropTypes.shape({
   __V: PropTypes.number,
 });
 
-Card.propTypes = {
-  card: cardPropsTypes.isRequired,
+CardIngridient.propTypes = {
+  card: cardIngridientPropsTypes.isRequired,
 };
 
 Section.propTypes = {
-  data: PropTypes.arrayOf(cardPropsTypes).isRequired,
+  data: PropTypes.arrayOf(cardIngridientPropsTypes).isRequired,
   type: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
 };
@@ -66,10 +65,12 @@ function BurgerIngredients() {
         </a>
       </div>
 
-      <scroll-container style={{ maxHeight: 850 }}>
-        <Section data={data} type={'bun'} title="Булки" />
-        <Section data={data} type={'sauce'} title="Соусы" />
-        <Section data={data} type={'main'} title="Начинки" />
+      <scroll-container>
+        <div className={tabStyle.scrollHeight} style={{ maxHeight: 600 }}>
+          <Section data={data} type={'bun'} title="Булки" />
+          <Section data={data} type={'sauce'} title="Соусы" />
+          <Section data={data} type={'main'} title="Начинки" />
+        </div>
       </scroll-container>
     </section>
   );
@@ -77,42 +78,18 @@ function BurgerIngredients() {
 
 export default BurgerIngredients;
 
-function Section({ data, type, title }) {
-  const arr = data.filter((e) => e.type === type);
-  return (
-    <section id={type} title={title}>
-      <h1 className={tabStyle.headline} style={{ paddingTop: 0 }}>
-        {title}
-      </h1>
-      <div className={tabStyle.cards}>
-        {arr.map((card, i) => {
-          return <Card key={i} card={card} />;
-        })}
-      </div>
-    </section>
-  );
-}
-
-function getCounter() {
-  const counter = Math.floor(Math.random() * 2);
-  if (counter === 0) return null;
-  return (
-    <div className={tabStyle.counter}>
-      <span>{counter}</span>
-    </div>
-  );
-}
-
-function Card({ card }) {
-  return (
-    <div className={tabStyle.card}>
-      {getCounter()}
-      <img src={card.image} alt={card.name} />
-      <div className={tabStyle.price}>
-        <span className={tabStyle.currency}>{card.price}</span>
-        <CurrencyIcon />
-      </div>
-      <div className={tabStyle.name}>{card.name}</div>
-    </div>
-  );
-}
+// function Section({ data, type, title }) {
+//   const arr = data.filter((e) => e.type === type);
+//   return (
+//     <section id={type} title={title}>
+//       <h1 className={tabStyle.headline} style={{ paddingTop: 0 }}>
+//         {title}
+//       </h1>
+//       <div className={tabStyle.cards}>
+//         {arr.map((card, i) => {
+//           return <CardIngridient key={i} card={card} />;
+//         })}
+//       </div>
+//     </section>
+//   );
+// }

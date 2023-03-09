@@ -14,14 +14,6 @@
   /* row-gap: 24px; */
 }
 
-/*.tab ul {
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}*/
-
 .card {
   display: grid;
   grid-template-rows: 120px 1fr 48px;
@@ -57,18 +49,21 @@
 
 /*////////////////////////////*/
 
-.scroll {
+scroll-container {
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #2f2f37 #8585ad;
+  scroll-behavior: smooth;
+}
+
+.scroll-height {
   max-height: 850px;
 }
 
 .cards {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 0 16px;
   gap: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .headline {

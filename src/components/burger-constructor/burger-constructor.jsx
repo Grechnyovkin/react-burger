@@ -1,13 +1,13 @@
 import {
   LockIcon,
   CurrencyIcon,
-  DeleteIcon,
-  DragIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import data from '../../utils/data';
 import constStyle from './burger-constructor.module.css';
+import Card from '../card/card';
+import { useMemo } from 'react';
 
 const cardPropsTypes = PropTypes.shape({
   _id: PropTypes.string.isRequired,
@@ -28,10 +28,10 @@ Card.propTypes = {
   card: cardPropsTypes.isRequired,
 };
 
-// const bun = data.filter((e) => e.type === 'bun');
+const bun = 'bun';
 
 const BurgerConstructor = () => {
-  const ingredients = data.filter((e) => e.type !== 'bun');
+  const ingredients = useMemo(() => data.filter((e) => e.type !== bun), []);
   return (
     <section id="constructor">
       <div className={`${constStyle.cards} pt-25`}>
@@ -54,7 +54,7 @@ const BurgerConstructor = () => {
             </div>
           </div>
         </div>
-        <scroll-container style={{ maxHeight: 466 }}>
+        <scroll-container>
           <ul className={constStyle.scrollitem}>
             {ingredients.map((card, i) => {
               return <Card key={i} card={card} />;
@@ -97,22 +97,3 @@ const BurgerConstructor = () => {
 };
 
 export default BurgerConstructor;
-
-function Card({ card }) {
-  return (
-    <li className={`${constStyle.line}`}>
-      <div className={constStyle.drag}>
-        <DragIcon type="primary" />
-      </div>
-      <div className={`${constStyle.card} pl-6  pr-8 pt-4 pb-4`}>
-        <img src={card.image} alt={card.name} />
-        <div className={constStyle.name}>{card.name}</div>
-        <div className={constStyle.price}>
-          <span className={constStyle.currency}>{card.price}</span>
-          <CurrencyIcon type="primary" />
-        </div>
-        <DeleteIcon type="primary" />
-      </div>
-    </li>
-  );
-}
