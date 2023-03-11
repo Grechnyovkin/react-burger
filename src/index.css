@@ -1,13 +1,99 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import './styles/common.css';
+@import './styles/box.css';
+@import './styles/button.css';
+
+@font-face {
+  src: url(./fonts/JetBrainsMono-Regular.woff2) format('woff2');
+  font-family: 'Jet Brains Mono';
+  font-weight: normal;
+  font-display: swap;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  src: url(./fonts/JetBrainsMono-Regular.woff) format('woff');
+  font-family: 'Jet Brains Mono';
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  src: url(./fonts/JetBrainsMono-Bold.woff2) format('woff2');
+  font-family: 'Jet Brains Mono';
+  font-weight: bold;
+  font-display: swap;
+}
+
+@font-face {
+  src: url(./fonts/JetBrainsMono-Bold.woff) format('woff');
+  font-family: 'Jet Brains Mono';
+  font-weight: bold;
+  font-display: swap;
+}
+
+@font-face {
+  src: url(./fonts/iceland.woff2) format('woff2');
+  font-family: 'Iceland';
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  src: url(./fonts/iceland.woff) format('woff');
+  font-family: 'Iceland';
+  font-weight: normal;
+  font-display: swap;
+}
+body {
+  /* font-family: 'JetBrains Mono'; */
+}
+
+.wrapper {
+  width: 1240px;
+  margin: auto;
+}
+.container {
+  width: 1240px;
+  margin: auto;
+}
+
+.main-title {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 40px;
+
+  /* identical to box height, or 111% */
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style: none;
+}
+scroll-container {
+  display: block;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  overflow-x: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: var(--text-primari-color);
 }

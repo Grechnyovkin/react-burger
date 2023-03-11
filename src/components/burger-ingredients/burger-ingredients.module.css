@@ -1,0 +1,162 @@
+.container {
+  width: 50%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.ing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* row-gap: 24px; */
+}
+
+.card {
+  display: grid;
+  grid-template-rows: 120px 1fr 48px;
+}
+
+.tab ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tab ul li {
+  /* display: inline; */
+  color: white;
+  text-align: center;
+  background-color: gray;
+  padding: 20px;
+  /* width: 27%; */
+  /* border-bottom: 2px solid transparent; */
+}
+
+.tab ul li:hover {
+  color: black;
+  cursor: pointer;
+  background-color: white;
+}
+
+.test {
+  color: var(--text-primary-color);
+}
+
+/*////////////////////////////*/
+
+scroll-container {
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #2f2f37 #8585ad;
+  scroll-behavior: smooth;
+}
+
+.scroll-height {
+  max-height: 850px;
+}
+
+.cards {
+  gap: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.headline {
+  height: 30px;
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  padding-top: 40px;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 32px;
+  padding-top: 24px;
+  width: 272px;
+}
+
+.counter {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  right: 0px;
+  top: 0px;
+  background-color: #4c4cff;
+  border-radius: 50%;
+  font-family: 'Iceland';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 24px;
+
+  /* or 86% */
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+
+  /* text/primary-light (standart text) */
+  color: #f2f2f3;
+}
+
+.price {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 8px;
+  height: 24px;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.currency {
+  font-family: 'Iceland';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 24px;
+}
+
+.name {
+  height: 48px;
+  flex: none;
+  order: 2;
+  align-self: stretch;
+  flex-grow: 1;
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+}
+
+.text {
+  padding: 20px;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* grid-template-rows: 50px; */
+  text-align: center;
+  align-items: center;
+  /* justify-items: center; */
+  padding: 0;
+  margin: 0;
+}
