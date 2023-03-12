@@ -4,40 +4,34 @@ import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import Loader from '../ui/loader/loader';
+const url = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
-  const url = 'https://norma.nomoreparties.space/api/ingredients';
-
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(true);
   const [ingrediens, setIngrediens] = useState([]);
 
   async function fetchMovies(url: string) {
-    // eslint-disable-next-line
-    const response = await fetch(url)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setIsLoaded(false);
-          setIngrediens(result.data);
-        },
-        (error) => {
+    await fetch(url)
+      .then((response) => {
+        if (!response.ok) {
           setIsLoaded(false);
           setError(error);
         }
-      )
+        return response.json();
+      })
+      .then((result) => {
+        setIsLoaded(false);
+        setIngrediens(result.data);
+      })
       .catch((error) => {
         setIsLoaded(false);
         setError(error);
-        console.log(error);
       });
   }
 
   useEffect(() => {
-    const delay = setTimeout(() => {
-      fetchMovies(url);
-    }, 1000);
-    return () => clearTimeout(delay);
+    fetchMovies(url);
   }, []);
 
   if (error) {

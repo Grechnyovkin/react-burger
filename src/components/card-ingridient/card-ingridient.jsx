@@ -31,19 +31,16 @@ function CardIngridient({ card }) {
         </div>
         <div className={cardIngStyle.name}>{card.name}</div>
       </div>
-
-      <Modal
-        visible={visible}
-        onClose={() => setVisible(false)}
-        title="Детали ингидиента"
-      >
-        <InghriedienDetails card={card} />
-      </Modal>
+      {visible && (
+        <Modal onClose={() => setVisible(false)} title="Детали ингидиента">
+          <InghriedienDetails card={card} />
+        </Modal>
+      )}
     </>
   );
 }
 
-const cardPropsTypes = PropTypes.shape({
+const cardIngridientPropsTypes = PropTypes.shape({
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -58,7 +55,8 @@ const cardPropsTypes = PropTypes.shape({
   __V: PropTypes.number,
 });
 
-InghriedienDetails.propTypes = {
-  card: cardPropsTypes.isRequired,
+CardIngridient.propTypes = {
+  card: cardIngridientPropsTypes.isRequired,
 };
+
 export default CardIngridient;

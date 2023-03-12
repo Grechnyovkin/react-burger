@@ -44,31 +44,6 @@ function BurgerIngredients({ ingrediens }) {
   );
 }
 
-const cardIngridientPropsTypes = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  calories: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  image_mobile: PropTypes.string.isRequired,
-  image_large: PropTypes.string.isRequired,
-  __V: PropTypes.number,
-});
-
-CardIngridient.propTypes = {
-  card: cardIngridientPropsTypes.isRequired,
-};
-
-Section.propTypes = {
-  data: PropTypes.arrayOf(cardIngridientPropsTypes).isRequired,
-  type: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-};
-
 BurgerIngredients.propTypes = {
   sections: PropTypes.arrayOf(Section),
 };

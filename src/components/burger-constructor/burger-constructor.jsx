@@ -83,9 +83,11 @@ const BurgerConstructor = ({ ingrediens }) => {
           Оформить заказ
         </Button>
       </div>
-      <Modal visible={visible} onClose={() => setVisible(false)}>
-        <OrderDatails />
-      </Modal>
+      {visible && (
+        <Modal visible={visible} onClose={() => setVisible(false)}>
+          <OrderDatails />
+        </Modal>
+      )}
     </section>
   );
 };

@@ -1,49 +1,55 @@
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import cls from './modal.module.css';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 
 const modalRoot = document.getElementById('modal');
+const esc = 27;
 
 const Modal = (props) => {
-  const { children, visible, onClose, title } = props;
-  const element = useMemo(() => document.createElement('div'), []);
+  const { children, onClose, title } = props;
+  const element = document.createElement('div');
 
   useEffect(() => {
-    if (visible) {
-      modalRoot.appendChild(element);
+    modalRoot.appendChild(element);
 
-      return () => {
-        modalRoot.removeChild(element);
-      };
-    }
+    return () => {
+      modalRoot.removeChild(element);
+    };
   });
 
-  if (visible) {
-    return createPortal(
-      <ModalOverlay onClose={onClose}>
-        <div className={cls.modal_card} onClick={(e) => e.stopPropagation()}>
-          <div className={`${cls.title}`}>
-            <span>{title}</span>
-            <div className={`${cls.close}`} onClick={onClose}>
-              <CloseIcon type="primary" />
-            </div>
-          </div>
+  useEffect(() => {
+    const close = (e) => {
+      if (e.keyCode === esc) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
+  }, []);
 
-          {children}
+  return createPortal(
+    <ModalOverlay onClose={onClose}>
+      <div className={cls.modal_card} onClick={(e) => e.stopPropagation()}>
+        <div className={`${cls.title}`}>
+          <span>{title}</span>
+          <div className={`${cls.close}`} onClick={onClose}>
+            <CloseIcon type="primary" />
+          </div>
         </div>
-      </ModalOverlay>,
-      element
-    );
-  }
-  return null;
+
+        {children}
+      </div>
+    </ModalOverlay>,
+    element
+  );
 };
 
 Modal.propTypes = {
   children: PropTypes.element.isRequired,
-  visible: PropTypes.bool.isRequired,
+  // visible: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   title: PropTypes.string,
 };

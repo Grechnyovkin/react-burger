@@ -1,4 +1,5 @@
 import cls from './ingredient-details.module.css';
+import PropTypes from 'prop-types';
 
 const InghriedienDetails = (props) => {
   const { card } = props;
@@ -26,6 +27,10 @@ const InghriedienDetails = (props) => {
       </div>
     </>
   );
+};
+
+InghriedienDetails.propTypes = {
+  card: PropTypes.object.isRequired,
 };
 
 export default InghriedienDetails;
