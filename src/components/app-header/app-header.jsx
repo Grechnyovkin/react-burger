@@ -4,6 +4,7 @@ import {
   ProfileIcon,
   ListIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import headerStyle from './app-header.module.css';
 
 const AppHeader = () => {
@@ -26,6 +27,7 @@ const AppHeader = () => {
           </div>
         </nav>
         <Logo />
+
         <div className={`${headerStyle.cabinet}`}>
           <a
             href="/some/valid/uri"

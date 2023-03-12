@@ -12,6 +12,9 @@ header {
 
 .content {
   width: 1280px;
+  /* display: flex; */
+  /* justify-content: space-between; */
+  /* align-items: center; */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   justify-items: center;
@@ -21,6 +24,9 @@ header {
 
 .navbar {
   justify-self: left;
+}
+.cabinet {
+  justify-self: end;
 }
 
 .blockItem {

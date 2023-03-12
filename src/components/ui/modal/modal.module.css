@@ -1,0 +1,29 @@
+.modal_card {
+  position: relative;
+  background: #1c1c21;
+  max-width: 720px;
+  max-height: 539px;
+  padding: 40px 40px 60px 40px;
+  border: 1px solid black;
+  border-radius: 40px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 30px;
+  width: 640px;
+}
+
+.close:hover svg {
+  /* position: absolute; */
+  cursor: pointer;
+  fill: var(--text-inactive-color);
+}
