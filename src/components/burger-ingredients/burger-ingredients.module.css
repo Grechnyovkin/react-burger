@@ -60,12 +60,6 @@ scroll-container {
   max-height: 850px;
 }
 
-.cards {
-  gap: 24px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
 .headline {
   height: 30px;
   font-family: 'JetBrains Mono';

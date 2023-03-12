@@ -76,3 +76,31 @@ li:last-child {
   height: 36px;
   width: 36px;
 }
+
+.order_id {
+  width: 520px;
+  font-family: iceland;
+  font-weight: 400;
+  font-size: 144px;
+  line-height: 120px;
+  text-align: center;
+}
+
+.title_id {
+  width: 520px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 30px;
+  text-align: center;
+}
+.info__title,
+.info__text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+}
+
+.info__text {
+  color: var(--text-inactive-color);
+}

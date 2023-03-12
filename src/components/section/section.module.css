@@ -1,4 +1,4 @@
-.cards {
+/* .cards {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -6,6 +6,13 @@
   align-items: flex-start;
   padding: 0 16px;
   gap: 24px;
+} */
+
+.cards {
+  gap: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: start;
 }
 
 .headline {

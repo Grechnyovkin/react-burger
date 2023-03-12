@@ -1,5 +1,15 @@
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 40;
+  gap: 40px;
+}
+.error {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.root-modal {
+  overflow: hidden;
 }

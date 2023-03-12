@@ -4,34 +4,20 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import data from '../../utils/data';
 import constStyle from './burger-constructor.module.css';
 import Card from '../card/card';
-import { useMemo } from 'react';
-
-const cardPropsTypes = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  calories: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  image_mobile: PropTypes.string.isRequired,
-  image_large: PropTypes.string.isRequired,
-  __V: PropTypes.number,
-});
-
-Card.propTypes = {
-  card: cardPropsTypes.isRequired,
-};
+import { useMemo, useState } from 'react';
+import Modal from '../ui/modal/modal';
+import OrderDatails from '../order-details/order-details';
 
 const bun = 'bun';
 
-const BurgerConstructor = () => {
-  const ingredients = useMemo(() => data.filter((e) => e.type !== bun), []);
+const BurgerConstructor = ({ ingrediens }) => {
+  const [visible, setVisible] = useState(false);
+  const ingredients = useMemo(
+    () => ingrediens.filter((e) => e.type !== bun),
+    [ingrediens]
+  );
   return (
     <section id="constructor">
       <div className={`${constStyle.cards} pt-25`}>
@@ -88,12 +74,39 @@ const BurgerConstructor = () => {
           </span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large">
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={() => setVisible(true)}
+        >
           Оформить заказ
         </Button>
       </div>
+      <Modal visible={visible} onClose={() => setVisible(false)}>
+        <OrderDatails />
+      </Modal>
     </section>
   );
+};
+
+const cardPropsTypes = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  proteins: PropTypes.number.isRequired,
+  fat: PropTypes.number.isRequired,
+  carbohydrates: PropTypes.number.isRequired,
+  calories: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
+  image_mobile: PropTypes.string.isRequired,
+  image_large: PropTypes.string.isRequired,
+  __V: PropTypes.number,
+});
+
+Card.propTypes = {
+  card: cardPropsTypes.isRequired,
 };
 
 export default BurgerConstructor;
