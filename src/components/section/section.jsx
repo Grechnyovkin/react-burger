@@ -2,9 +2,14 @@ import sectionStyle from './section.module.css';
 import CardIngridient from '../card-ingridient/card-ingridient';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
+import { useAppSelector } from '../app/hooks';
 
-const Section = ({ data, type, title }) => {
-  const arr = useMemo(() => data.filter((e) => e.type === type), [data, type]);
+const Section = ({ type, title }) => {
+  const { ingredients } = useAppSelector((store) => store.ingredients);
+  const arr = useMemo(
+    () => ingredients.filter((e) => e.type === type),
+    [ingredients, type]
+  );
   return (
     <section id={type} title={title}>
       <h1 className={sectionStyle.headline} style={{ paddingTop: 0 }}>
@@ -35,7 +40,6 @@ const cardIngridientPropsTypes = PropTypes.shape({
 });
 
 Section.propTypes = {
-  data: PropTypes.arrayOf(cardIngridientPropsTypes).isRequired,
   type: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
 };

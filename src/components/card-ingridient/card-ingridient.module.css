@@ -34,6 +34,28 @@
   color: #f2f2f3;
 }
 
+.delete {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  left: 0px;
+  top: 0px;
+  background-color: #4c4cff;
+  border-radius: 50%;
+  font-family: 'Iceland';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 24px;
+  z-index: 9999;
+}
+
+.delete:hover {
+  background-color: red;
+
+  cursor: pointer;
+}
+
 .price {
   display: flex;
   flex-direction: row;

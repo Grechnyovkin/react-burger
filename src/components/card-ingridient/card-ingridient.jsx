@@ -1,42 +1,80 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import InghriedienDetails from '../ingredient-details/ingredient-details';
 import Modal from '../ui/modal/modal';
 import PropTypes from 'prop-types';
 import cardIngStyle from './card-ingridient.module.css';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { upQty, resetQty, bunQty } from '../burger-ingredients/ingredientSlice';
+import {
+  addIngredient,
+  replaceBun,
+  setTotal,
+} from '../burger-constructor/constructorSlice';
+import { detail, resetDetail } from '../ingredient-details/detailSlice';
 
-function CardIngridient({ card }) {
+function CardIngridient({ card, onDropHandler }) {
+  const { _id, name, type, image, price } = card;
+  const dispatch = useAppDispatch();
+
+  const { bun } = useAppSelector((state) => state.constructors);
+  const bunId = bun.id;
+
   const [visible, setVisible] = useState(false);
-  const getCounter = () => {
-    const count = Math.floor(Math.random() * 2);
-    if (count === 0) return null;
-    return count;
+
+  const newCIngredient = (id) => {
+    if (type === 'bun') {
+      dispatch(resetQty(bunId));
+      dispatch(bunQty({ id }));
+      dispatch(replaceBun({ id, name, price, image }));
+      dispatch(setTotal());
+    } else {
+      dispatch(upQty({ id }));
+      dispatch(addIngredient({ id, name, price, image }));
+      dispatch(setTotal());
+    }
   };
 
-  const counter = useMemo(() => getCounter(), []);
+  const openModal = (card) => {
+    dispatch(detail({ card }));
+    setVisible(true);
+  };
+  const closeModal = () => {
+    dispatch(resetDetail());
+    setVisible(false);
+  };
 
   return (
     <>
-      <div className={cardIngStyle.card} onClick={() => setVisible(true)}>
-        {counter && (
+      <div className={cardIngStyle.card} onClick={() => openModal({ ...card })}>
+        {card.qty !== 0 ? (
           <div className={cardIngStyle.counter}>
-            <span>{counter}</span>
+            <span>{card.qty}</span>
           </div>
-        )}
+        ) : null}
 
-        <img src={card.image} alt={card.name} />
+        <button
+          className={cardIngStyle.delete}
+          onClick={() => newCIngredient(_id)}
+        >
+          +
+        </button>
+
+        <img src={image} alt={name} />
         <div className={cardIngStyle.price}>
-          <span className={cardIngStyle.currency}>{card.price}</span>
+          <span className={cardIngStyle.currency}>{price}</span>
           <CurrencyIcon />
         </div>
-        <div className={cardIngStyle.name}>{card.name}</div>
+        <div className={cardIngStyle.name}>{name}</div>
       </div>
+
       {visible && (
-        <Modal onClose={() => setVisible(false)} title="Детали ингидиента">
-          <InghriedienDetails card={card} />
+        <Modal onClose={() => closeModal()} title="Детали ингидиента">
+          <InghriedienDetails {...card} />
         </Modal>
       )}
     </>
+    // )
   );
 }
 

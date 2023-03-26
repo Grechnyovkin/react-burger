@@ -1,11 +1,10 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import CardIngridient from '../card-ingridient/card-ingridient';
 import tabStyle from './burger-ingredients.module.css';
 import Section from '../section/section';
 
-function BurgerIngredients({ ingrediens }) {
+function BurgerIngredients() {
   const [current, setCurrent] = useState('one');
 
   return (
@@ -35,9 +34,9 @@ function BurgerIngredients({ ingrediens }) {
       </div>
       <scroll-container>
         <div className={tabStyle.scrollHeight} style={{ maxHeight: 600 }}>
-          <Section data={ingrediens} type={'bun'} title="Булки" />
-          <Section data={ingrediens} type={'sauce'} title="Соусы" />
-          <Section data={ingrediens} type={'main'} title="Начинки" />
+          <Section type={'bun'} title="Булки" />
+          <Section type={'sauce'} title="Соусы" />
+          <Section type={'main'} title="Начинки" />
         </div>
       </scroll-container>
     </section>
