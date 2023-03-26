@@ -5,59 +5,23 @@ import Modal from '../ui/modal/modal';
 import PropTypes from 'prop-types';
 import cardIngStyle from './card-ingridient.module.css';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { upQty, resetQty, bunQty } from '../burger-ingredients/ingredientSlice';
-import {
-  addIngredient,
-  replaceBun,
-  setTotal,
-} from '../burger-constructor/constructorSlice';
 import { detail, resetDetail } from '../ingredient-details/detailSlice';
 import { useDrag } from 'react-dnd';
-import { useDrop } from 'react-dnd';
 
 function CardIngridient({ card }) {
-  const { _id, name, type, image, price } = card;
+  const { _id, name, image, price } = card;
 
   const dispatch = useAppDispatch();
 
-  const { bun } = useAppSelector((state) => state.constructors);
-  const bunId = bun.id;
-
   const [visible, setVisible] = useState(false);
 
-  const [{ isDrag }, dragRef] = useDrag({
+  const [_, dragRef] = useDrag({
     type: 'default',
     item: { _id },
     collect: (monitor) => ({
       isDrag: monitor.didDrop(),
     }),
   });
-  const newCIngredient = (id) => {
-    if (type === 'bun') {
-      dispatch(resetQty(bunId));
-      dispatch(bunQty({ id }));
-      dispatch(replaceBun({ id, name, price, image }));
-      dispatch(setTotal());
-    } else {
-      dispatch(upQty({ id }));
-      dispatch(addIngredient({ id, name, price, image }));
-      dispatch(setTotal());
-    }
-  };
-
-  // const [{ isHover }, dropTarget] = useDrop({
-  //   accept: 'bun',
-  //   drop(_id) {
-  //     newCIngredient(_id);
-  //   },
-  //   collect: (monitor) => ({
-  //     isHover: monitor.isOver(),
-  //   }),
-  // });isDrag
-
-  // if (isDrag) {
-  //   newCIngredient(_id);
-  // }
 
   const openModal = (card) => {
     dispatch(detail({ card }));
@@ -81,13 +45,6 @@ function CardIngridient({ card }) {
           </div>
         ) : null}
 
-        {/* <button
-          className={cardIngStyle.delete}
-          onClick={() => newCIngredient(_id)}
-        >
-          +
-        </button> */}
-
         <img src={image} alt={name} />
         <div className={cardIngStyle.price}>
           <span className={cardIngStyle.currency}>{price}</span>
@@ -102,7 +59,6 @@ function CardIngridient({ card }) {
         </Modal>
       )}
     </>
-    // )
   );
 }
 

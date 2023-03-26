@@ -4,8 +4,9 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import constStyle from './burger-constructor.module.css';
-import {} from './constructorSlice';
+import { resetConctructor } from './constructorSlice';
 import { addIngredientOrder } from '../order-details/orderSlice';
+import { resetQtyOrder } from '../burger-ingredients/ingredientSlice';
 
 const Order = ({ setVisible }) => {
   const dispatch = useAppDispatch();
@@ -38,6 +39,8 @@ const Order = ({ setVisible }) => {
     dispatch(
       addIngredientOrder({ orderId, ingredients, discount, totalPrice })
     );
+    dispatch(resetConctructor());
+    dispatch(resetQtyOrder());
     setVisible(true);
   };
 

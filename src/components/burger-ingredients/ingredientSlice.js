@@ -56,6 +56,13 @@ const ingredientSlice = createSlice({
       );
       toggledQty.map((item) => (item.qty = 0));
     },
+    resetQtyOrder(state) {
+      state.ingredients.map((item) => (item.qty = 0));
+      const toggledQtyBun = state.ingredients.find(
+        (ingredient) => ingredient._id === '60d3b41abdacab0026a733c6'
+      );
+      toggledQtyBun.qty = 2;
+    },
   },
 });
 
@@ -67,6 +74,7 @@ export const {
   downQty,
   bunQty,
   resetQty,
+  resetQtyOrder,
 } = ingredientSlice.actions;
 
 export default ingredientSlice.reducer;
