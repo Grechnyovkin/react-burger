@@ -1,5 +1,5 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import InghriedienDetails from '../ingredient-details/ingredient-details';
 import Modal from '../ui/modal/modal';
 import PropTypes from 'prop-types';
@@ -12,9 +12,12 @@ import {
   setTotal,
 } from '../burger-constructor/constructorSlice';
 import { detail, resetDetail } from '../ingredient-details/detailSlice';
+import { useDrag } from 'react-dnd';
+import { useDrop } from 'react-dnd';
 
-function CardIngridient({ card, onDropHandler }) {
+function CardIngridient({ card }) {
   const { _id, name, type, image, price } = card;
+
   const dispatch = useAppDispatch();
 
   const { bun } = useAppSelector((state) => state.constructors);
@@ -22,6 +25,13 @@ function CardIngridient({ card, onDropHandler }) {
 
   const [visible, setVisible] = useState(false);
 
+  const [{ isDrag }, dragRef] = useDrag({
+    type: 'default',
+    item: { _id },
+    collect: (monitor) => ({
+      isDrag: monitor.didDrop(),
+    }),
+  });
   const newCIngredient = (id) => {
     if (type === 'bun') {
       dispatch(resetQty(bunId));
@@ -35,6 +45,20 @@ function CardIngridient({ card, onDropHandler }) {
     }
   };
 
+  // const [{ isHover }, dropTarget] = useDrop({
+  //   accept: 'bun',
+  //   drop(_id) {
+  //     newCIngredient(_id);
+  //   },
+  //   collect: (monitor) => ({
+  //     isHover: monitor.isOver(),
+  //   }),
+  // });isDrag
+
+  // if (isDrag) {
+  //   newCIngredient(_id);
+  // }
+
   const openModal = (card) => {
     dispatch(detail({ card }));
     setVisible(true);
@@ -46,19 +70,23 @@ function CardIngridient({ card, onDropHandler }) {
 
   return (
     <>
-      <div className={cardIngStyle.card} onClick={() => openModal({ ...card })}>
+      <div
+        className={cardIngStyle.card}
+        ref={dragRef}
+        onClick={() => openModal({ ...card })}
+      >
         {card.qty !== 0 ? (
           <div className={cardIngStyle.counter}>
             <span>{card.qty}</span>
           </div>
         ) : null}
 
-        <button
+        {/* <button
           className={cardIngStyle.delete}
           onClick={() => newCIngredient(_id)}
         >
           +
-        </button>
+        </button> */}
 
         <img src={image} alt={name} />
         <div className={cardIngStyle.price}>

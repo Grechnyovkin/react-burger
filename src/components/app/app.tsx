@@ -6,6 +6,8 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import Loader from '../ui/loader/loader';
 import { useAppDispatch, useAppSelector } from './hooks';
 import fetchIngredients from './actionCreator';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -23,8 +25,10 @@ function App() {
       <div className="wrapper">
         <main className="container">
           <div className={appStyle.grid}>
-            <BurgerIngredients />
-            <BurgerConstructor />
+            <DndProvider backend={HTML5Backend}>
+              <BurgerIngredients />
+              <BurgerConstructor />
+            </DndProvider>
           </div>
         </main>
       </div>

@@ -7,7 +7,7 @@
   gap: 32px;
   padding-top: 24px;
   width: 272px;
-  cursor: pointer;
+  cursor: grab;
 }
 
 .counter {

@@ -37,6 +37,7 @@ const ingredientSlice = createSlice({
       toggledQty.qty += 1;
     },
     downQty(state, action) {
+      console.log(action.payload.id);
       const toggledQty = state.ingredients.find(
         (ingredient) => ingredient._id === action.payload.id
       );

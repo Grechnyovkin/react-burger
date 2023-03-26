@@ -9,9 +9,11 @@ import {
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const ConstructorItem = ({ id, cid, name, price, image }) => {
+const ConstructorItem = (ingredient) => {
+  console.log(ingredient);
+  const { id, cid, name, price, image } = ingredient;
   const dispatch = useAppDispatch();
-
+  console.log(id);
   const remove = () => {
     dispatch(removeIngredient({ cid }));
     dispatch(downQty({ id }));
