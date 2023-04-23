@@ -1,23 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, nanoid } from '@reduxjs/toolkit';
 
 const constructorSlice = createSlice({
   name: 'constructors',
   initialState: {
-    bun: {
-      id: '60d3b41abdacab0026a733c6',
-      name: 'Краторная булка N-200i ',
-      image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-      qty: 2,
-      price: 1255,
-    },
+    bun: null,
     constructors: [],
-    total: 2510,
+    total: 0,
   },
   reducers: {
     addIngredient(state, action) {
       state.constructors.push({
         id: action.payload.id,
-        cid: new Date().toISOString(),
+        cid: nanoid(),
         name: action.payload.name,
         price: action.payload.price,
         image: action.payload.image,
@@ -30,14 +24,28 @@ const constructorSlice = createSlice({
       );
     },
     replaceBun(state, action) {
-      state.bun.id = action.payload.id;
-      state.bun.price = action.payload.price;
-      state.bun.name = action.payload.name;
-      state.bun.image = action.payload.image;
+      state.bun = {
+        id: action.payload.id,
+        cid: nanoid(),
+        name: action.payload.name,
+        price: action.payload.price,
+        image: action.payload.image,
+        qty: 2,
+      };
+    },
+    replaceConctructor(state, action) {
+      state.constructors = action.payload;
     },
     setTotal(state) {
-      const bunPrice = state.bun.price * state.bun.qty;
-      if (state.constructors.length !== null) {
+      let bunPrice = 0;
+      if (state.bun) {
+        bunPrice = state.bun.price * state.bun.qty;
+        state.total = bunPrice;
+      } else {
+        state.total = bunPrice;
+      }
+
+      if (state.constructors.length) {
         const ingPrice = state.constructors.reduce(
           (acc, item) => acc + item.price,
           0
@@ -49,14 +57,8 @@ const constructorSlice = createSlice({
     },
     resetConctructor(state) {
       state.constructors = [];
-      state.total = 2510;
-      state.bun = {
-        id: '60d3b41abdacab0026a733c6',
-        name: 'Краторная булка N-200i ',
-        image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-        qty: 2,
-        price: 1255,
-      };
+      state.total = 0;
+      state.bun = null;
     },
   },
 });
@@ -67,6 +69,7 @@ export const {
   replaceBun,
   setTotal,
   resetConctructor,
+  replaceConctructor,
 } = constructorSlice.actions;
 
 export default constructorSlice.reducer;

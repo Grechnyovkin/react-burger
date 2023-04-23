@@ -1,27 +1,54 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useMemo, useState } from 'react';
-import InghriedienDetails from '../ingredient-details/ingredient-details';
-import Modal from '../ui/modal/modal';
 import PropTypes from 'prop-types';
 import cardIngStyle from './card-ingridient.module.css';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { detail, resetDetail } from '../ingredient-details/detailSlice';
+
+import InghriedienDetails from '../ingredient-details/ingredient-details';
+import Modal from '../ui/modal/modal';
+import { useState } from 'react';
+import { useRef } from 'react';
 import { useDrag } from 'react-dnd';
 
-function CardIngridient({ card }) {
-  const { _id, name, image, price } = card;
+import {
+  addIngredient,
+  replaceBun,
+  setTotal,
+} from '../burger-constructor/constructorSlice';
+import { useAppDispatch } from '../app/hooks';
+import { increment, resetBunQty } from '../burger-ingredients/ingredientSlice';
 
+function CardIngridient({ card }) {
+  const { _id, name, image, price, type, qty } = card;
   const dispatch = useAppDispatch();
 
-  const [visible, setVisible] = useState(false);
+  const changeItem = (item) => {
+    if (type === 'bun') {
+      dispatch(
+        replaceBun({
+          id: _id,
+          name: name,
+          price: price,
+          image: image,
+        })
+      );
+      dispatch(resetBunQty());
+      dispatch(increment(item._id));
+      dispatch(increment(item._id));
+    } else {
+      dispatch(
+        addIngredient({
+          id: _id,
+          name: name,
+          price: price,
+          image: image,
+        })
+      );
+      dispatch(increment(item._id));
+    }
+    dispatch(setTotal());
+  };
 
-  const [_, dragRef] = useDrag({
-    type: 'default',
-    item: { _id },
-    collect: (monitor) => ({
-      isDrag: monitor.didDrop(),
-    }),
-  });
+  const [visible, setVisible] = useState(false);
 
   const openModal = (card) => {
     dispatch(detail({ card }));
@@ -32,20 +59,34 @@ function CardIngridient({ card }) {
     setVisible(false);
   };
 
+  const ref = useRef(null);
+
+  const [{ opacity }, drag] = useDrag(
+    () => ({
+      type,
+      item: { _id },
+      end: (item, monitor) => {
+        const dropResult = monitor.getDropResult();
+        if (dropResult) changeItem(item);
+      },
+      collect: (monitor) => ({
+        opacity: monitor.isDragging() ? 0.4 : 1,
+      }),
+    }),
+    [name, type]
+  );
+
+  drag(ref);
   return (
     <>
-      <div
-        className={cardIngStyle.card}
-        ref={dragRef}
-        onClick={() => openModal({ ...card })}
-      >
+      <div className={cardIngStyle.card} onClick={() => openModal({ ...card })}>
         {card.qty !== 0 ? (
           <div className={cardIngStyle.counter}>
             <span>{card.qty}</span>
           </div>
         ) : null}
 
-        <img src={image} alt={name} />
+        <img ref={ref} src={image} alt={name} />
         <div className={cardIngStyle.price}>
           <span className={cardIngStyle.currency}>{price}</span>
           <CurrencyIcon />
@@ -55,7 +96,7 @@ function CardIngridient({ card }) {
 
       {visible && (
         <Modal onClose={() => closeModal()} title="Детали ингидиента">
-          <InghriedienDetails {...card} />
+          <InghriedienDetails card={card} />
         </Modal>
       )}
     </>

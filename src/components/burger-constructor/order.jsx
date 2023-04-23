@@ -1,4 +1,3 @@
-import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
   CurrencyIcon,
   Button,
@@ -6,7 +5,9 @@ import {
 import constStyle from './burger-constructor.module.css';
 import { resetConctructor } from './constructorSlice';
 import { addIngredientOrder } from '../order-details/orderSlice';
-import { resetQtyOrder } from '../burger-ingredients/ingredientSlice';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { resetQty } from '../burger-ingredients/ingredientSlice';
+// import { resetQtyOrder } from '../burger-ingredients/ingredientSlice';
 
 const Order = ({ setVisible }) => {
   const dispatch = useAppDispatch();
@@ -40,7 +41,7 @@ const Order = ({ setVisible }) => {
       addIngredientOrder({ orderId, ingredients, discount, totalPrice })
     );
     dispatch(resetConctructor());
-    dispatch(resetQtyOrder());
+    dispatch(resetQty());
     setVisible(true);
   };
 

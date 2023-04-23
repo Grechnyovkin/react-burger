@@ -1,80 +1,104 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  // nanoid,
+  createAsyncThunk,
+  createAction,
+  current,
+} from '@reduxjs/toolkit';
+// import axios from 'axios';
+// const ingredients_url = 'https://jsonplaceholder.typicode.com/posts';
+const ingredients_url = 'https://norma.nomoreparties.space/api/ingredients';
 
-const url = 'https://norma.nomoreparties.space/api/ingredients';
+// export const incrementBy = createAction('incrementBy');
+// const decrement = createAction('decrement')
 
 const initialState = {
   ingredients: [],
-  isLoading: false,
-  status: null,
+  status: 'idle',
   error: null,
 };
 
-const ingredientSlice = createSlice({
+export const fetchIngredients = createAsyncThunk(
+  'ingredients/fetchIngredients',
+  async () => {
+    try {
+      const response = await fetch(ingredients_url);
+      if (response.ok) {
+        const ingredients = await response.json();
+        return [...ingredients.data];
+      } else {
+        console.error('This promise should never be entered');
+      }
+    } catch (err) {
+      return err.message;
+    }
+  }
+);
+
+const ingredientsSlice = createSlice({
   name: 'ingredients',
   initialState,
   reducers: {
-    inghredientsFetching(state) {
-      state.isLoading = true;
-    },
-    inghredientsFetchingSuccess(state, action) {
-      state.isLoading = false;
-      state.error = '';
-      state.ingredients = action.payload;
-      state.ingredients.map((item) => (item.qty = 0));
-      const toggledQty = state.ingredients.find(
-        (ingredient) => ingredient._id === '60d3b41abdacab0026a733c6'
+    increment: (state, action) => {
+      const ingredientId = action.payload;
+
+      const existingIngredients = state.ingredients.find(
+        (ingredient) => ingredient._id === ingredientId
       );
-      toggledQty.qty = 2;
+
+      if (existingIngredients) {
+        existingIngredients.qty++;
+      }
     },
-    inghredientsFetchingError(state, action) {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-    upQty(state, action) {
-      const toggledQty = state.ingredients.find(
-        (ingredient) => ingredient._id === action.payload.id
+    decrement(state, action) {
+      const ingredientId = action.payload;
+      console.log(ingredientId);
+      const existingIngredients = state.ingredients.find(
+        (ingredient) => ingredient._id === ingredientId
       );
-      toggledQty.qty += 1;
+      console.log(current(existingIngredients));
+      if (existingIngredients) {
+        existingIngredients.qty--;
+      }
     },
-    downQty(state, action) {
-      console.log(action.payload.id);
-      const toggledQty = state.ingredients.find(
-        (ingredient) => ingredient._id === action.payload.id
-      );
-      toggledQty.qty -= 1;
-    },
-    bunQty(state, action) {
-      const toggledQty = state.ingredients.find(
-        (ingredient) => ingredient._id === action.payload.id
-      );
-      toggledQty.qty = 0;
-      toggledQty.qty += 2;
-    },
-    resetQty(state) {
+    resetBunQty(state, action) {
       const toggledQty = state.ingredients.filter(
         (ingredient) => ingredient.type === 'bun'
       );
       toggledQty.map((item) => (item.qty = 0));
     },
-    resetQtyOrder(state) {
+    resetQty(state, action) {
       state.ingredients.map((item) => (item.qty = 0));
-      const toggledQtyBun = state.ingredients.find(
-        (ingredient) => ingredient._id === '60d3b41abdacab0026a733c6'
-      );
-      toggledQtyBun.qty = 2;
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchIngredients.pending, (state, action) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchIngredients.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        if (action.payload) {
+          const loadedIngredients = action.payload.map((ingredient) => {
+            ingredient.qty = 0;
+            return ingredient;
+          });
+          state.ingredients = state.ingredients.concat(loadedIngredients);
+        }
+        return;
+      })
+      .addCase(fetchIngredients.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
   },
 });
 
-export const {
-  inghredientsFetching,
-  inghredientsFetchingSuccess,
-  inghredientsFetchingError,
-  upQty,
-  downQty,
-  bunQty,
-  resetQty,
-  resetQtyOrder,
-} = ingredientSlice.actions;
+export const selectAllIngredients = (state) => state.ingredients.ingredients;
+export const getIngredientsStatus = (state) => state.ingredients.status;
+export const getIngredientsError = (state) => state.ingredients.error;
 
-export default ingredientSlice.reducer;
+export const { increment, decrement, resetBunQty, resetQty } =
+  ingredientsSlice.actions;
+
+export default ingredientsSlice.reducer;

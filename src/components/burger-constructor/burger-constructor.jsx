@@ -1,25 +1,19 @@
 import PropTypes from 'prop-types';
 import constStyle from './burger-constructor.module.css';
-import Card from '../card/card';
 import { useState } from 'react';
 import Modal from '../ui/modal/modal';
 import OrderDatails from '../order-details/order-details';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import ConstructorBun from './constructor-bun';
 import ConstructorList from './constructor-list';
 import Order from './order';
 import { resetIngredientOrder } from '../order-details/orderSlice';
 
-import { useDrop } from 'react-dnd';
-import { logRoles } from '@testing-library/react';
-import { bunQty, resetQty, upQty } from '../burger-ingredients/ingredientSlice';
-import { addIngredient, replaceBun, setTotal } from './constructorSlice';
+import ConstructorBun from './constructor-bun';
+
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 
 const BurgerConstructor = () => {
   const dispatch = useAppDispatch();
-  const { bun } = useAppSelector((state) => state.constructors);
-  const bunId = bun.id;
-  const { ingredients } = useAppSelector((state) => state.ingredients);
+  // const { ingredients } = useAppSelector((state) => state.ingredients);
   const [visible, setVisible] = useState(false);
 
   const closeModal = () => {
@@ -27,56 +21,17 @@ const BurgerConstructor = () => {
     setVisible(false);
   };
 
-  const [{ isHover }, dropTarget] = useDrop({
-    accept: 'default',
-    drop(itemId) {
-      newCIngredient(itemId);
-    },
-    collect: (monitor) => ({
-      isHover: monitor.didDrop,
-    }),
-  });
-
-  const newCIngredient = (id) => {
-    const element = ingredients.find((item) => item._id === id._id);
-    const ids = element._id;
-    if (element.type === 'bun') {
-      dispatch(resetQty(bunId));
-      dispatch(bunQty({ id: ids }));
-      dispatch(
-        replaceBun({
-          id: element._id,
-          name: element.name,
-          price: element.price,
-          image: element.image,
-        })
-      );
-      dispatch(setTotal());
-    } else {
-      dispatch(upQty({ id: ids }));
-      dispatch(
-        addIngredient({
-          id: element._id,
-          name: element.name,
-          price: element.price,
-          image: element.image,
-        })
-      );
-      dispatch(setTotal());
-    }
-  };
-
   return (
-    <section id="constructor" ref={dropTarget}>
+    <section id="constructor">
       <div className={`${constStyle.cards} pt-25`}>
         <div className={`${constStyle.line} pl-8 `}>
-          <ConstructorBun pos={'(верх)'} />
+          <ConstructorBun pos={'(верх)'} accept={['bun']} index />
         </div>
 
-        <ConstructorList />
+        <ConstructorList accept={['sauce', 'main']} />
 
         <div className={`${constStyle.line} pl-8 `}>
-          <ConstructorBun pos={'(низ)'} />
+          <ConstructorBun pos={'(низ)'} accept={['bun']} />
         </div>
       </div>
       <Order setVisible={setVisible} />
@@ -103,9 +58,5 @@ const cardPropsTypes = PropTypes.shape({
   image_large: PropTypes.string.isRequired,
   __V: PropTypes.number,
 });
-
-Card.propTypes = {
-  card: cardPropsTypes.isRequired,
-};
 
 export default BurgerConstructor;

@@ -1,18 +1,39 @@
 import sectionStyle from './section.module.css';
-import CardIngridient from '../card-ingridient/card-ingridient';
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
-import { useAppSelector } from '../app/hooks';
+import { useMemo, useRef, useState } from 'react';
 
-const Section = ({ type, title }) => {
+import { useAppSelector } from '../app/hooks';
+import useElementOnScreen from '../../hooks/useElementOnScreen';
+// import { useInView } from 'react-intersection-observer';
+import CardIngridient from '../card-ingridient/card-ingridient';
+
+const Section = ({ type, title, handleActive, value }) => {
   const { ingredients } = useAppSelector((store) => store.ingredients);
+  // const [currentTab, setCurrentTab] = useState('bun')
   const arr = useMemo(
     () => ingredients.filter((e) => e.type === type),
     [ingredients, type]
   );
+  // const arr = ingredients.filter((e) => e.type === type);
+
+  const rootRef = document.querySelector('#obs');
+
+  const targetRef = useRef(null);
+
+  const isVisible = useElementOnScreen(
+    {
+      root: rootRef,
+      rootMargin: '0px 0px',
+      threshold: 0.5,
+    },
+    targetRef,
+    handleActive,
+    value
+  );
+
   return (
-    <section id={type} title={title}>
-      <h1 className={sectionStyle.headline} style={{ paddingTop: 0 }}>
+    <section id={type} title={title} className={sectionStyle.ingSection}>
+      <h1 className={sectionStyle.headline} ref={targetRef}>
         {title}
       </h1>
       <div className={sectionStyle.cards}>
@@ -23,21 +44,6 @@ const Section = ({ type, title }) => {
     </section>
   );
 };
-
-const cardIngridientPropsTypes = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  calories: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  image_mobile: PropTypes.string.isRequired,
-  image_large: PropTypes.string.isRequired,
-  __V: PropTypes.number,
-});
 
 Section.propTypes = {
   type: PropTypes.string.isRequired,
