@@ -1,6 +1,6 @@
 import { useDrag, useDrop } from 'react-dnd';
 
-import { removeIngredient, setTotal } from './constructorSlice';
+import { removeIngredient, setTotal } from '../services/constructorSlice';
 import { useRef } from 'react';
 import cardStyle from './constructor-item.module.css';
 
@@ -10,8 +10,8 @@ import {
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useAppDispatch } from '../../services/hooks';
-import { decrement } from '../burger-ingredients/ingredientSlice';
+import { useAppDispatch } from '../../hooks/hooks';
+import { decrement } from '../services/ingredientSlice';
 
 const ConstructorItem = ({ ingredient, index, moveCardHandler }) => {
   const { id, cid, name, price, image } = ingredient;

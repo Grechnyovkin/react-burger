@@ -4,10 +4,10 @@ import Modal from '../ui/modal/modal';
 import OrderDatails from '../order-details/order-details';
 import ConstructorList from './constructor-list';
 import Order from './order';
-import { resetIngredientOrder } from '../order-details/orderSlice';
+import { resetIngredientOrder } from '../services/orderSlice';
 
 import ConstructorBun from './constructor-bun';
-import { useAppDispatch } from '../../services/hooks';
+import { useAppDispatch } from '../../hooks/hooks';
 import { useModal } from '../../hooks/useModal';
 
 const BurgerConstructor = () => {

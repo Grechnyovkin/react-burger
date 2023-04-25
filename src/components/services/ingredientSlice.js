@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { BASE_URL } from '../constants/urls';
+import { BASE_URL } from '../../utils/urls';
 
 const ingredients_url = `${BASE_URL}/ingredients`;
 

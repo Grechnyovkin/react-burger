@@ -3,14 +3,14 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import constStyle from './burger-constructor.module.css';
-import { resetConctructor } from './constructorSlice';
-import { addIngredientOrder } from '../order-details/orderSlice';
+import { resetConctructor } from '../services/constructorSlice';
+import { addIngredientOrder } from '../services/orderSlice';
 
-import { useAppDispatch, useAppSelector } from '../../services/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
-import { addNewOrder } from '../order-details/orderSlice';
+import { addNewOrder } from '../services/orderSlice';
 import { useState } from 'react';
-import { resetQty } from '../burger-ingredients/ingredientSlice';
+import { resetQty } from '../services/ingredientSlice';
 
 const Order = ({ openModal, setOrderDataDetails }) => {
   const dispatch = useAppDispatch();

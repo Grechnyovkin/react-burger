@@ -2,12 +2,12 @@ import ConstructorItem from './constructor-item';
 
 import constStyle from './burger-constructor.module.css';
 import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../services/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 import { useDrop } from 'react-dnd';
 import { useRef } from 'react';
 
-import { replaceConctructor } from './constructorSlice';
+import { replaceConctructor } from '../services/constructorSlice';
 
 const style = {
   marginRight: '1.5rem',

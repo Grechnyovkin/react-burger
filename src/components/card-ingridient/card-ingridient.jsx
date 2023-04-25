@@ -1,7 +1,7 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import cardIngStyle from './card-ingridient.module.css';
-import { detail, resetDetail } from '../ingredient-details/detailSlice';
+import { detail, resetDetail } from '../services/detailSlice';
 
 import InghriedienDetails from '../ingredient-details/ingredient-details';
 import Modal from '../ui/modal/modal';
@@ -13,9 +13,9 @@ import {
   addIngredient,
   replaceBun,
   setTotal,
-} from '../burger-constructor/constructorSlice';
-import { useAppDispatch } from '../../services/hooks';
-import { increment, resetBunQty } from '../burger-ingredients/ingredientSlice';
+} from '../services/constructorSlice';
+import { useAppDispatch } from '../../hooks/hooks';
+import { increment, resetBunQty } from '../services/ingredientSlice';
 import { cardPropsTypes } from '../../utils/types';
 import { useModal } from '../../hooks/useModal';
 

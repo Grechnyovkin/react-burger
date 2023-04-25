@@ -4,7 +4,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import constStyle from './burger-constructor.module.css';
 
-import { useAppSelector } from '../../services/hooks';
+import { useAppSelector } from '../../hooks/hooks';
 import { useDrop } from 'react-dnd';
 import { useRef } from 'react';
 
