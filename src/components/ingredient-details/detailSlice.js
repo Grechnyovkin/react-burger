@@ -13,7 +13,6 @@ const detailSlice = createSlice({
       state.ingredient = {};
     },
   },
-  extraReducers: {},
 });
 
 export const { detail, resetDetail } = detailSlice.actions;

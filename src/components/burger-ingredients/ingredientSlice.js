@@ -1,16 +1,7 @@
-import {
-  createSlice,
-  // nanoid,
-  createAsyncThunk,
-  createAction,
-  current,
-} from '@reduxjs/toolkit';
-// import axios from 'axios';
-// const ingredients_url = 'https://jsonplaceholder.typicode.com/posts';
-const ingredients_url = 'https://norma.nomoreparties.space/api/ingredients';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { BASE_URL } from '../constants/urls';
 
-// export const incrementBy = createAction('incrementBy');
-// const decrement = createAction('decrement')
+const ingredients_url = `${BASE_URL}/ingredients`;
 
 const initialState = {
   ingredients: [],
@@ -20,17 +11,16 @@ const initialState = {
 
 export const fetchIngredients = createAsyncThunk(
   'ingredients/fetchIngredients',
-  async () => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await fetch(ingredients_url);
-      if (response.ok) {
-        const ingredients = await response.json();
-        return [...ingredients.data];
-      } else {
-        console.error('This promise should never be entered');
+      if (!response.ok) {
+        throw new Error('Server error');
       }
+      const ingredients = await response.json();
+      return [...ingredients.data];
     } catch (err) {
-      return err.message;
+      return rejectWithValue(err.message);
     }
   }
 );
@@ -52,11 +42,9 @@ const ingredientsSlice = createSlice({
     },
     decrement(state, action) {
       const ingredientId = action.payload;
-      console.log(ingredientId);
       const existingIngredients = state.ingredients.find(
         (ingredient) => ingredient._id === ingredientId
       );
-      console.log(current(existingIngredients));
       if (existingIngredients) {
         existingIngredients.qty--;
       }

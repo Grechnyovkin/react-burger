@@ -14,12 +14,16 @@ import {
   replaceBun,
   setTotal,
 } from '../burger-constructor/constructorSlice';
-import { useAppDispatch } from '../app/hooks';
+import { useAppDispatch } from '../../services/hooks';
 import { increment, resetBunQty } from '../burger-ingredients/ingredientSlice';
+import { cardPropsTypes } from '../../utils/types';
+import { useModal } from '../../hooks/useModal';
 
 function CardIngridient({ card }) {
   const { _id, name, image, price, type, qty } = card;
   const dispatch = useAppDispatch();
+  const { isModalOpen, openModal, closeModal } = useModal();
+  // console.log(isModalOpen);
 
   const changeItem = (item) => {
     if (type === 'bun') {
@@ -48,15 +52,17 @@ function CardIngridient({ card }) {
     dispatch(setTotal());
   };
 
-  const [visible, setVisible] = useState(false);
+  // const [visible, setVisible] = useState(false);
 
-  const openModal = (card) => {
+  const openUseModal = (card) => {
     dispatch(detail({ card }));
-    setVisible(true);
+    openModal();
+    // setVisible(true);
   };
-  const closeModal = () => {
+  const closeUseModal = () => {
     dispatch(resetDetail());
-    setVisible(false);
+    closeModal();
+    // setVisible(false);
   };
 
   const ref = useRef(null);
@@ -79,7 +85,10 @@ function CardIngridient({ card }) {
   drag(ref);
   return (
     <>
-      <div className={cardIngStyle.card} onClick={() => openModal({ ...card })}>
+      <div
+        className={cardIngStyle.card}
+        onClick={() => openUseModal({ ...card })}
+      >
         {card.qty !== 0 ? (
           <div className={cardIngStyle.counter}>
             <span>{card.qty}</span>
@@ -94,8 +103,8 @@ function CardIngridient({ card }) {
         <div className={cardIngStyle.name}>{name}</div>
       </div>
 
-      {visible && (
-        <Modal onClose={() => closeModal()} title="Детали ингидиента">
+      {isModalOpen && (
+        <Modal onClose={() => closeUseModal()} title="Детали ингидиента">
           <InghriedienDetails card={card} />
         </Modal>
       )}
@@ -103,23 +112,8 @@ function CardIngridient({ card }) {
   );
 }
 
-const cardIngridientPropsTypes = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  calories: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  image_mobile: PropTypes.string.isRequired,
-  image_large: PropTypes.string.isRequired,
-  __V: PropTypes.number,
-});
-
 CardIngridient.propTypes = {
-  card: cardIngridientPropsTypes.isRequired,
+  card: cardPropsTypes.isRequired,
 };
 
 export default CardIngridient;

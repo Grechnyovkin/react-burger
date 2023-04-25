@@ -10,12 +10,11 @@ import {
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useAppDispatch } from '../app/hooks';
+import { useAppDispatch } from '../../services/hooks';
 import { decrement } from '../burger-ingredients/ingredientSlice';
 
 const ConstructorItem = ({ ingredient, index, moveCardHandler }) => {
   const { id, cid, name, price, image } = ingredient;
-  // console.log(ingredient);
   const dispatch = useAppDispatch();
   const remove = () => {
     dispatch(removeIngredient({ cid }));

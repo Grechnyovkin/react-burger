@@ -2,7 +2,7 @@ import ConstructorItem from './constructor-item';
 
 import constStyle from './burger-constructor.module.css';
 import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
 import { useDrop } from 'react-dnd';
 import { useRef } from 'react';

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import constStyle from './burger-constructor.module.css';
 import { useState } from 'react';
 import Modal from '../ui/modal/modal';
@@ -8,17 +7,17 @@ import Order from './order';
 import { resetIngredientOrder } from '../order-details/orderSlice';
 
 import ConstructorBun from './constructor-bun';
-
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useAppDispatch } from '../../services/hooks';
+import { useModal } from '../../hooks/useModal';
 
 const BurgerConstructor = () => {
   const dispatch = useAppDispatch();
-  // const { ingredients } = useAppSelector((state) => state.ingredients);
-  const [visible, setVisible] = useState(false);
+  const { isModalOpen, openModal, closeModal } = useModal();
+  const [orderDataDetails, setOrderDataDetails] = useState(null);
 
-  const closeModal = () => {
+  const closeUseModal = () => {
     dispatch(resetIngredientOrder());
-    setVisible(false);
+    closeModal();
   };
 
   return (
@@ -34,29 +33,14 @@ const BurgerConstructor = () => {
           <ConstructorBun pos={'(низ)'} accept={['bun']} />
         </div>
       </div>
-      <Order setVisible={setVisible} />
-      {visible && (
-        <Modal visible={visible} onClose={() => closeModal()}>
-          <OrderDatails />
+      <Order openModal={openModal} setOrderDataDetails={setOrderDataDetails} />
+      {isModalOpen && (
+        <Modal visible={isModalOpen} onClose={() => closeUseModal()}>
+          <OrderDatails orderDataDetails={orderDataDetails} />
         </Modal>
       )}
     </section>
   );
 };
-
-const cardPropsTypes = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  calories: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  image_mobile: PropTypes.string.isRequired,
-  image_large: PropTypes.string.isRequired,
-  __V: PropTypes.number,
-});
 
 export default BurgerConstructor;

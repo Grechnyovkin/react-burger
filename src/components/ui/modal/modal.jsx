@@ -28,7 +28,7 @@ const Modal = (props) => {
     };
     window.addEventListener('keydown', close);
     return () => window.removeEventListener('keydown', close);
-  }, []);
+  }, [onClose]);
 
   return createPortal(
     <ModalOverlay onClose={onClose}>
@@ -49,7 +49,6 @@ const Modal = (props) => {
 
 Modal.propTypes = {
   children: PropTypes.element.isRequired,
-  // visible: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   title: PropTypes.string,
 };

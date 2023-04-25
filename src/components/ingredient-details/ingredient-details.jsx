@@ -1,8 +1,8 @@
+import { cardPropsTypes } from '../../utils/types';
 import cls from './ingredient-details.module.css';
-import PropTypes from 'prop-types';
 
-const InghriedienDetails = (props) => {
-  const { name, calories, proteins, fat, carbohydrates, image } = props;
+const InghriedienDetails = ({ card }) => {
+  const { name, calories, proteins, fat, carbohydrates, image } = card;
   return (
     <>
       <img className={`${cls.images} pt-4`} src={image} alt={name} />
@@ -30,7 +30,7 @@ const InghriedienDetails = (props) => {
 };
 
 InghriedienDetails.propTypes = {
-  // card: PropTypes.object.isRequired,
+  card: cardPropsTypes.isRequired,
 };
 
 export default InghriedienDetails;

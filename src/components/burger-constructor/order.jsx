@@ -5,44 +5,59 @@ import {
 import constStyle from './burger-constructor.module.css';
 import { resetConctructor } from './constructorSlice';
 import { addIngredientOrder } from '../order-details/orderSlice';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { resetQty } from '../burger-ingredients/ingredientSlice';
-// import { resetQtyOrder } from '../burger-ingredients/ingredientSlice';
 
-const Order = ({ setVisible }) => {
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
+
+import { addNewOrder } from '../order-details/orderSlice';
+import { useState } from 'react';
+import { resetQty } from '../burger-ingredients/ingredientSlice';
+
+const Order = ({ openModal, setOrderDataDetails }) => {
   const dispatch = useAppDispatch();
+  const [addRequectStaus, setAddRequestStatus] = useState('idle');
   const { total, bun, constructors } = useAppSelector(
     (state) => state.constructors
   );
 
-  const getOrderId = () => {
-    return Math.floor(Math.random() * 1000000).toString();
+  const canSave =
+    [bun, constructors.length].every(Boolean) && addRequectStaus === 'idle';
+
+  const onSaveOrder = async () => {
+    try {
+      setAddRequestStatus('pending');
+      const test = (await dispatch(addNewOrder())).payload;
+      if (!test.success) {
+        console.error("Can't add order - Server error");
+      } else {
+        setOrderDataDetails(test);
+        // setVisible(true);
+        openModal();
+      }
+    } catch (err) {
+      console.error('Server error', err);
+    } finally {
+      setAddRequestStatus('idle');
+    }
   };
 
-  const orderId = getOrderId();
-
   const checkout = () => {
-    const bn = [];
+    if (canSave) {
+      const ingredientsOrder = [...constructors, bun];
 
-    bn.push({
-      id: bun.id,
-      name: bun.name,
-      qty: bun.qty,
-      price: bun.price,
-    });
+      const ingredients = ingredientsOrder.map((ingredient) => ingredient.id);
 
-    const ingredients = [...bn, ...constructors];
-    const totalPrice = ingredients.reduce(
-      (acc, item) => acc + item.price * item.qty,
-      0
-    );
-    const discount = 0;
-    dispatch(
-      addIngredientOrder({ orderId, ingredients, discount, totalPrice })
-    );
-    dispatch(resetConctructor());
-    dispatch(resetQty());
-    setVisible(true);
+      const totalPrice = ingredientsOrder.reduce(
+        (acc, item) => acc + item.price * item.qty,
+        0
+      );
+      dispatch(addIngredientOrder({ ingredients, totalPrice }));
+      onSaveOrder();
+
+      dispatch(resetConctructor());
+      dispatch(resetQty());
+    } else {
+      console.error('filed to save the order');
+    }
   };
 
   return (

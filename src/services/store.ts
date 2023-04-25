@@ -5,10 +5,10 @@ import {
   combineReducers,
 } from '@reduxjs/toolkit';
 
-import ingredientReducer from '../burger-ingredients/ingredientSlice';
-import constructorReducer from '../burger-constructor/constructorSlice';
-import detailReducer from '../ingredient-details/detailSlice';
-import orderReducer from '../order-details/orderSlice';
+import ingredientReducer from '../components/burger-ingredients/ingredientSlice';
+import constructorReducer from '../components/burger-constructor/constructorSlice';
+import detailReducer from '../components/ingredient-details/detailSlice';
+import orderReducer from '../components/order-details/orderSlice';
 
 const rootReducer = combineReducers({
   ingredients: ingredientReducer,

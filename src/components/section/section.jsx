@@ -2,7 +2,7 @@ import sectionStyle from './section.module.css';
 import PropTypes from 'prop-types';
 import { useMemo, useRef, useState } from 'react';
 
-import { useAppSelector } from '../app/hooks';
+import { useAppSelector } from '../../services/hooks';
 import useElementOnScreen from '../../hooks/useElementOnScreen';
 // import { useInView } from 'react-intersection-observer';
 import CardIngridient from '../card-ingridient/card-ingridient';
