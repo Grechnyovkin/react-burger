@@ -17,7 +17,7 @@ export const fetchIngredients = createAsyncThunk(
       const response = await fetch(ingredients_url);
       checkResponse(response, 'Server error');
       const ingredients = await response.json();
-      return [...ingredients.data];
+      return ingredients.data;
     } catch (err) {
       return rejectWithValue(err.message);
     }

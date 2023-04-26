@@ -31,6 +31,8 @@ const Order = ({ openModal, setOrderDataDetails }) => {
       } else {
         setOrderDataDetails(response);
         openModal();
+        dispatch(resetConctructor());
+        dispatch(resetQty());
       }
     } catch (err) {
       console.error('Server error', err);
@@ -51,9 +53,6 @@ const Order = ({ openModal, setOrderDataDetails }) => {
       );
       dispatch(addIngredientOrder({ ingredients, totalPrice }));
       onSaveOrder();
-
-      dispatch(resetConctructor());
-      dispatch(resetQty());
     } else {
       console.error('filed to save the order');
     }
