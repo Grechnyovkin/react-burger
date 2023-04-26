@@ -43,8 +43,14 @@
   background-color: white;
 }
 
-.test {
+/* .test {
   color: var(--text-primary-color);
+} */
+
+.ingredientBox {
+  display: flex;
+  margin-top: 20;
+  margin-bottom: 40;
 }
 
 /*////////////////////////////*/
@@ -56,14 +62,8 @@ scroll-container {
   scroll-behavior: smooth;
 }
 
-.scroll-height {
-  max-height: 850px;
-}
-
-.cards {
-  gap: 24px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.scrollHeight {
+  height: 750px;
 }
 
 .headline {
