@@ -23,7 +23,6 @@ function CardIngridient({ card }) {
   const { _id, name, image, price, type, qty } = card;
   const dispatch = useAppDispatch();
   const { isModalOpen, openModal, closeModal } = useModal();
-  // console.log(isModalOpen);
 
   const changeItem = (item) => {
     if (type === 'bun') {
@@ -52,17 +51,13 @@ function CardIngridient({ card }) {
     dispatch(setTotal());
   };
 
-  // const [visible, setVisible] = useState(false);
-
   const openUseModal = (card) => {
     dispatch(detail({ card }));
     openModal();
-    // setVisible(true);
   };
   const closeUseModal = () => {
     dispatch(resetDetail());
     closeModal();
-    // setVisible(false);
   };
 
   const ref = useRef(null);

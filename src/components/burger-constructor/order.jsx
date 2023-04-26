@@ -25,12 +25,11 @@ const Order = ({ openModal, setOrderDataDetails }) => {
   const onSaveOrder = async () => {
     try {
       setAddRequestStatus('pending');
-      const test = (await dispatch(addNewOrder())).payload;
-      if (!test.success) {
+      const response = (await dispatch(addNewOrder())).payload;
+      if (!response.success) {
         console.error("Can't add order - Server error");
       } else {
-        setOrderDataDetails(test);
-        // setVisible(true);
+        setOrderDataDetails(response);
         openModal();
       }
     } catch (err) {

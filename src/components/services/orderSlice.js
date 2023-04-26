@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { BASE_URL } from '../../utils/urls';
+import { checkResponse } from '../../utils/functions';
 
 const order_url = `${BASE_URL}/orders`;
 
@@ -17,12 +18,9 @@ export const addNewOrder = createAsyncThunk(
           ingredients: ingredients,
         }),
       });
-      if (!response.ok) {
-        throw new Error("Can't add order - Server error");
-      } else {
-        const data = await response.json();
-        return data;
-      }
+      checkResponse(response, "Can't add order - Server error");
+      const data = await response.json();
+      return data;
     } catch (err) {
       dispatch(resetIngredientOrder());
       return rejectWithValue(err.message);
